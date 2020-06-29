@@ -7,4 +7,60 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+	<!-- anim -->
+	<style name="iOSDialogAnimStyle">
+		<item name="android:windowEnterAnimation">@anim/enter_ios_anim</item>
+		<item name="android:windowExitAnimation">@anim/exit_ios_anim</item>
+	</style>
+
+	<!-- dialog -->
+	<style name="CircularProgress">
+		<item name="cpd_padding">7dp</item>
+		<item name="cpd_initialAngle">0</item>
+		<item name="cpd_maxSweepAngle">270</item>
+		<item name="cpd_minSweepAngle">1</item>
+		<item name="cpd_strokeSize">2dp</item>
+		<item name="cpd_strokeColor">#fff</item>
+		<item name="cpd_strokeSecondaryColor">@android:color/transparent</item>
+		<item name="cpd_reverse">false</item>
+		<item name="cpd_rotateDuration">1000</item>
+		<item name="cpd_transformDuration">600</item>
+		<item name="cpd_keepDuration">200</item>
+		<item name="cpd_transformInterpolator">@android:anim/decelerate_interpolator</item>
+		<item name="pv_progressMode">indeterminate</item>
+		<item name="cpd_inAnimDuration">0</item>
+		<item name="cpd_outAnimDuration">@android:integer/config_mediumAnimTime</item>
+	</style>
+
+	<!-- dialog -->
+	<declare-styleable name="RealtimeBlurView">
+		<attr name="realtimeBlurRadius" format="dimension"/>
+		<attr name="realtimeDownsampleFactor" format="float"/>
+		<attr name="realtimeOverlayColor" format="color"/>
+		<attr name="xRadius" format="dimension"/>
+		<attr name="yRadius" format="dimension"/>
+	</declare-styleable>
+	<declare-styleable name="CircularProgressDrawable">
+		<attr name="cpd_padding" format="reference|dimension"/>
+		<attr name="cpd_initialAngle" format="reference|integer"/>
+		<attr name="cpd_maxSweepAngle" format="reference|integer"/>
+		<attr name="cpd_minSweepAngle" format="reference|integer"/>
+		<attr name="cpd_strokeSize" format="reference|dimension"/>
+		<attr name="cpd_strokeColor" format="reference|color"/>
+		<attr name="cpd_strokeSecondaryColor" format="reference|color"/>
+		<attr name="cpd_strokeColors" format="reference"/>
+		<attr name="cpd_reverse" format="boolean"/>
+		<attr name="cpd_rotateDuration" format="reference|integer"/>
+		<attr name="cpd_transformDuration" format="reference|integer"/>
+		<attr name="cpd_keepDuration" format="reference|integer"/>
+		<attr name="cpd_transformInterpolator" format="reference"/>
+		<attr name="cpd_inAnimDuration" format="reference|integer"/>
+		<attr name="cpd_outAnimDuration" format="reference|integer"/>
+		<attr name="cpd_inStepColors" format="reference"/>
+		<attr name="cpd_inStepPercent" format="float"/>
+		<attr name="pv_progressMode"/>
+	</declare-styleable>
+	<declare-styleable name="ProgressView">
+		<attr name="borderWidth" format="dimension" />
+	</declare-styleable>
 </resources>
