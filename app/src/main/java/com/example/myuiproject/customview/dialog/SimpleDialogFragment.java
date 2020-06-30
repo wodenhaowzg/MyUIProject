@@ -1,9 +1,10 @@
-package com.example.myuiproject.dialog;
+package com.example.myuiproject.customview.dialog;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,9 @@ import androidx.fragment.app.DialogFragment;
  * 使用方式：
  * SimpleDialogFragment simpleDialogFragment = SimpleDialogFragment.newInstance("我是标题", "我是内容");
  * simpleDialogFragment.show(getSupportFragmentManager(), "SimpleDialogFragment");
+ *
+ *
+ *
  */
 public class SimpleDialogFragment extends DialogFragment {
 
@@ -75,8 +79,9 @@ public class SimpleDialogFragment extends DialogFragment {
         }
 
         if (mProgressDialog != null) {
+            ColorDrawable colorDrawable = new ColorDrawable();
+            mProgressDialog.setIndeterminateDrawable(colorDrawable);
             mProgressDialog.setMessage(content);
-            setHideProgress();
         }
     }
 

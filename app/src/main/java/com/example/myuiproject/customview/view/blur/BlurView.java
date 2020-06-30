@@ -1,4 +1,4 @@
-package com.example.myuiproject.view.blur;
+package com.example.myuiproject.customview.view.blur;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.example.myuiproject.recycleview;
+package com.example.myuiproject.customview.recycleview;
 
 import android.content.Context;
 

@@ -1,2 +1,3 @@
+include ':mybaseui'
 include ':app'
 rootProject.name = "MyUIProject"

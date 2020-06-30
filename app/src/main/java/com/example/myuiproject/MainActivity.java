@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.myuiproject.databinding.ActivityMainBinding;
-import com.example.myuiproject.dialog.SimpleDialogFragment;
+import com.example.myuiproject.customview.dialog.SimpleDialogFragment;
 
 import androidx.databinding.DataBindingUtil;
 import io.reactivex.Observable;

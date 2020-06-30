@@ -1,4 +1,4 @@
-package com.example.myuiproject.view;
+package com.example.myuiproject.customview.view;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;

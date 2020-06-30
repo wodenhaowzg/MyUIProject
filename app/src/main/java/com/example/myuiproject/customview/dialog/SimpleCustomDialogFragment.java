@@ -1,4 +1,4 @@
-package com.example.myuiproject.dialog;
+package com.example.myuiproject.customview.dialog;
 
 import androidx.fragment.app.DialogFragment;
 
