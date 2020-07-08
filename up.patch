@@ -1,0 +1,773 @@
+Index: app/src/main/java/com/example/myuiproject/recycleview/MyRecycleAdapter.java
+===================================================================
+--- app/src/main/java/com/example/myuiproject/recycleview/MyRecycleAdapter.java	(revision 83c1c1833a95478967552ec82f6d187429058aa8)
++++ app/src/main/java/com/example/myuiproject/customview/recycleview/MyRecycleAdapter.java	(date 1593445110000)
+@@ -1,4 +1,4 @@
+-package com.example.myuiproject.recycleview;
++package com.example.myuiproject.customview.recycleview;
+ 
+ import android.content.Context;
+ import android.view.View;
+Index: app/src/main/java/com/example/myuiproject/dialog/BaseDialog.java
+===================================================================
+--- app/src/main/java/com/example/myuiproject/dialog/BaseDialog.java	(revision 83c1c1833a95478967552ec82f6d187429058aa8)
++++ app/src/main/java/com/example/myuiproject/customview/dialog/BaseDialog.java	(date 1593445110000)
+@@ -1,4 +1,4 @@
+-package com.example.myuiproject.dialog;
++package com.example.myuiproject.customview.dialog;
+ 
+ import android.app.Dialog;
+ import android.content.Context;
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_main.xml	(revision 83c1c1833a95478967552ec82f6d187429058aa8)
++++ app/src/main/res/layout/activity_main.xml	(date 1593445110000)
+@@ -11,19 +11,11 @@
+ 		android:layout_height="match_parent"
+ 		tools:context=".MainActivity">
+ 
+-		<Button
+-			android:id="@+id/main_dialog_simple"
+-			android:layout_width="wrap_content"
+-			android:layout_height="wrap_content"
+-			android:text="SimpleDialogFragment" />
+-
+ 		<TextView
++			android:id="@+id/main_dialog_simple"
+ 			android:layout_width="wrap_content"
+ 			android:layout_height="wrap_content"
+-			android:text="Hello World!"
+-			app:layout_constraintBottom_toBottomOf="parent"
+-			app:layout_constraintLeft_toLeftOf="parent"
+-			app:layout_constraintRight_toRightOf="parent"
+-			app:layout_constraintTop_toTopOf="parent" />
++			android:text="ProgressDialog" />
++
+ 	</androidx.constraintlayout.widget.ConstraintLayout>
+ </layout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/myuiproject/recycleview/MyRecycleView.java
+===================================================================
+--- app/src/main/java/com/example/myuiproject/recycleview/MyRecycleView.java	(revision 83c1c1833a95478967552ec82f6d187429058aa8)
++++ app/src/main/java/com/example/myuiproject/customview/recycleview/MyRecycleView.java	(date 1593445110000)
+@@ -1,4 +1,4 @@
+-package com.example.myuiproject.recycleview;
++package com.example.myuiproject.customview.recycleview;
+ 
+ import android.content.Context;
+ 
+Index: app/src/main/java/com/example/myuiproject/dialog/DialogManager.java
+===================================================================
+--- app/src/main/java/com/example/myuiproject/dialog/DialogManager.java	(revision 83c1c1833a95478967552ec82f6d187429058aa8)
++++ app/src/main/java/com/example/myuiproject/customview/dialog/DialogManager.java	(date 1593445110000)
+@@ -1,4 +1,4 @@
+-package com.example.myuiproject.dialog;
++package com.example.myuiproject.customview.dialog;
+ 
+ public class DialogManager {
+ }
+Index: mybaseui/consumer-rules.pro
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mybaseui/consumer-rules.pro	(date 1593445839000)
++++ mybaseui/consumer-rules.pro	(date 1593445839000)
+@@ -0,0 +1,0 @@
+Index: app/src/main/java/com/example/myuiproject/dialog/SimpleDialogFragment.java
+===================================================================
+--- app/src/main/java/com/example/myuiproject/dialog/SimpleDialogFragment.java	(revision 83c1c1833a95478967552ec82f6d187429058aa8)
++++ app/src/main/java/com/example/myuiproject/customview/dialog/SimpleDialogFragment.java	(date 1593445110000)
+@@ -1,9 +1,10 @@
+-package com.example.myuiproject.dialog;
++package com.example.myuiproject.customview.dialog;
+ 
+ import android.app.Dialog;
+ import android.app.ProgressDialog;
+ import android.content.Context;
+ import android.content.DialogInterface;
++import android.graphics.drawable.ColorDrawable;
+ import android.os.Bundle;
+ import android.util.Log;
+ import android.view.LayoutInflater;
+@@ -35,6 +36,9 @@
+  * 使用方式：
+  * SimpleDialogFragment simpleDialogFragment = SimpleDialogFragment.newInstance("我是标题", "我是内容");
+  * simpleDialogFragment.show(getSupportFragmentManager(), "SimpleDialogFragment");
++ *
++ *
++ *
+  */
+ public class SimpleDialogFragment extends DialogFragment {
+ 
+@@ -75,8 +79,9 @@
+         }
+ 
+         if (mProgressDialog != null) {
++            ColorDrawable colorDrawable = new ColorDrawable();
++            mProgressDialog.setIndeterminateDrawable(colorDrawable);
+             mProgressDialog.setMessage(content);
+-            setHideProgress();
+         }
+     }
+ 
+Index: mybaseui/src/main/java/com/example/mybaseui/ShapeBuilder.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mybaseui/src/main/java/com/example/mybaseui/ShapeBuilder.java	(date 1593478823000)
++++ mybaseui/src/main/java/com/example/mybaseui/ShapeBuilder.java	(date 1593478823000)
+@@ -0,0 +1,94 @@
++package com.example.mybaseui;
++
++import java.io.File;
++
++/*
++<?xml version="1.0" encoding="utf-8"?>
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++    android:shape="rectangle">
++    <solid android:color="#0f0" />
++    <size
++        android:width="200dp"
++        android:height="200dp" />
++    <corners
++        android:bottomLeftRadius="5dp"
++        android:bottomRightRadius="5dp"
++        android:radius="10dp"
++        android:topLeftRadius="5dp"
++        android:topRightRadius="5dp" />
++    <stroke
++        android:width="1dp"
++        android:color="#f00"
++        android:dashWidth="30dp"
++        android:dashGap="10dp" />
++    <gradient
++        android:angle="0"
++        android:centerColor="#00f"
++        android:centerX="0.5"
++        android:centerY="0.5"
++        android:endColor="#000"
++        android:gradientRadius="90"
++        android:startColor="fff"
++        android:type="linear"
++        android:useLevel="false" />
++    <padding
++        android:bottom="10dp"
++        android:left="10dp"
++        android:right="10dp"
++        android:top="10dp" />
++</shape>
++*/
++class ShapeBuilder extends BaseBuilder {
++
++    private String[] mShapeTypeArray = new String[]{"rectangle", "oval", "line", "ring"};
++
++    // name
++    File mFilePath = new File("app/src/main/res/drawable/test.xml");
++    // type
++    String mShapeType = mShapeTypeArray[0];
++    // solid
++    String mShapeSolidColor = "#0f0";
++    // size
++    int mShapeSizeWidth = 20;
++    int mShapeSizeHeight = 20;
++    // corners
++    int mCornerBottomLeft = 5;
++    int mCornerBottomRight = 5;
++    int mCorner = 5;
++    int mCornerTopLeft = 5;
++    int mCornerTopRight = 5;
++
++    public static void main(String[] args) {
++        ShapeBuilder shapeBuilder = new ShapeBuilder();
++        System.out.println(shapeBuilder.mFilePath.getAbsolutePath());
++
++        StringBuilder sb = new StringBuilder();
++        sb.append(mXmlSpace).append("\n");
++        sb.append("<shape ").append(mAndroidResSpace).append("\n");
++        sb.append("\t").append("android:shape=").append("\"").append(shapeBuilder.mShapeType).append("\">").append("\n");
++        // solid
++        sb.append("\t").append("<solid android:color=").append("\"").append(shapeBuilder.mShapeSolidColor).append("\" />").append("\n");
++
++        // size
++        sb.append("\t").append("<size").append("\n");
++        sb.append("\t\t").append("android:width=").append("\"").append(shapeBuilder.mShapeSizeWidth).append("dp\"").append("\n");
++        sb.append("\t\t").append("android:height=").append("\"").append(shapeBuilder.mShapeSizeHeight).append("dp\" />").append("\n");
++
++        //    <corners
++        //        android:bottomLeftRadius="5dp"
++        //        android:bottomRightRadius="5dp"
++        //        android:radius="10dp"
++        //        android:topLeftRadius="5dp"
++        //        android:topRightRadius="5dp" />
++
++        sb.append("\t").append("<corners").append("\n");
++        sb.append("\t\t").append("android:bottomLeftRadius=").append("\"").append(shapeBuilder.mCornerBottomLeft).append("dp\"").append("\n");
++        sb.append("\t\t").append("android:bottomRightRadius=").append("\"").append(shapeBuilder.mCornerBottomRight).append("dp\" />").append("\n");
++        sb.append("\t\t").append("android:radius=").append("\"").append(shapeBuilder.mCorner).append("dp\" />").append("\n");
++        sb.append("\t\t").append("android:topLeftRadius=").append("\"").append(shapeBuilder.mCornerTopLeft).append("dp\" />").append("\n");
++        sb.append("\t\t").append("android:topRightRadius=").append("\"").append(shapeBuilder.mCornerTopRight).append("dp\" />").append("\n");
++
++        sb.append("</shape>");
++        System.out.println(sb.toString());
++    }
++}
+Index: app/src/main/java/com/example/myuiproject/view/blur/BlurView.java
+===================================================================
+--- app/src/main/java/com/example/myuiproject/view/blur/BlurView.java	(revision 83c1c1833a95478967552ec82f6d187429058aa8)
++++ app/src/main/java/com/example/myuiproject/customview/view/blur/BlurView.java	(date 1593445110000)
+@@ -1,4 +1,4 @@
+-package com.example.myuiproject.view.blur;
++package com.example.myuiproject.customview.view.blur;
+ 
+ import android.app.Activity;
+ import android.content.Context;
+Index: app/src/main/java/com/example/myuiproject/dialog/SimpleCustomDialogFragment.java
+===================================================================
+--- app/src/main/java/com/example/myuiproject/dialog/SimpleCustomDialogFragment.java	(revision 83c1c1833a95478967552ec82f6d187429058aa8)
++++ app/src/main/java/com/example/myuiproject/customview/dialog/SimpleCustomDialogFragment.java	(date 1593445110000)
+@@ -1,4 +1,4 @@
+-package com.example.myuiproject.dialog;
++package com.example.myuiproject.customview.dialog;
+ 
+ import androidx.fragment.app.DialogFragment;
+ 
+Index: mybaseui/proguard-rules.pro
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mybaseui/proguard-rules.pro	(date 1593445839000)
++++ mybaseui/proguard-rules.pro	(date 1593445839000)
+@@ -0,0 +1,21 @@
++# Add project specific ProGuard rules here.
++# You can control the set of applied configuration files using the
++# proguardFiles setting in build.gradle.
++#
++# For more details, see
++#   http://developer.android.com/guide/developing/tools/proguard.html
++
++# If your project uses WebView with JS, uncomment the following
++# and specify the fully qualified class name to the JavaScript interface
++# class:
++#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
++#   public *;
++#}
++
++# Uncomment this to preserve the line number information for
++# debugging stack traces.
++#-keepattributes SourceFile,LineNumberTable
++
++# If you keep the line number information, uncomment this to
++# hide the original source file name.
++#-renamesourcefileattribute SourceFile
+\ No newline at end of file
+Index: settings.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- settings.gradle	(revision 83c1c1833a95478967552ec82f6d187429058aa8)
++++ settings.gradle	(date 1593445839000)
+@@ -1,2 +1,3 @@
++include ':mybaseui'
+ include ':app'
+ rootProject.name = "MyUIProject"
+\ No newline at end of file
+Index: mybaseui/src/main/java/com/example/mybaseui/utils/MyFileUtils.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mybaseui/src/main/java/com/example/mybaseui/utils/MyFileUtils.java	(date 1593446744000)
++++ mybaseui/src/main/java/com/example/mybaseui/utils/MyFileUtils.java	(date 1593446744000)
+@@ -0,0 +1,296 @@
++package com.example.mybaseui.utils;
++
++import java.io.BufferedReader;
++import java.io.BufferedWriter;
++import java.io.File;
++import java.io.FileReader;
++import java.io.FileWriter;
++import java.io.IOException;
++import java.nio.file.Files;
++import java.nio.file.Paths;
++import java.nio.file.StandardCopyOption;
++
++public class MyFileUtils {
++
++    private static final String TAG = MyFileUtils.class.getSimpleName();
++
++    public static File checkFileExist(String filePath) {
++        if (MyTextUtils.isEmpty(filePath)) {
++            MyLog.error(TAG, "checkFileExist -> 源文件路径是空的！");
++            return null;
++        }
++
++        File file = new File(filePath);
++        if (!file.exists()) {
++            MyLog.error(TAG, "checkFileExist -> 源文件不存在！");
++            return null;
++        }
++
++        if (!file.isFile()) {
++            MyLog.error(TAG, "checkFileExist -> 源文件的类型不是文件类型！");
++            return null;
++        }
++        return file;
++    }
++
++    public static File checkFileDirExist(String filePath) {
++        if (MyTextUtils.isEmpty(filePath)) {
++            MyLog.error(TAG, "checkFileDirExist -> 源文件夹路径是空的！");
++            return null;
++        }
++
++        File file = new File(filePath);
++        if (!file.exists()) {
++            MyLog.error(TAG, "checkFileExist -> 源文件夹不存在！");
++            return null;
++        }
++
++        if (!file.isDirectory()) {
++            MyLog.error(TAG, "checkFileExist -> 源文件夹的类型不是文件夹类型！");
++            return null;
++        }
++        return file;
++    }
++
++    public static boolean modifyFileContent(String filePath, FileContentListener fileContentListener) {
++        File file = checkFileExist(filePath);
++        if (file == null) {
++            MyLog.error(TAG, "modifyFileContent -> 检测参数失败！");
++            return false;
++        }
++
++        BufferedReader reader = null;
++        BufferedWriter writer = null;
++        String[] split = file.getName().split("\\.");
++        String tempFileName = System.currentTimeMillis() + "." + split[1];
++        File tempSaveFile = new File(file.getParent(), tempFileName);
++        try {
++            reader = new BufferedReader(new FileReader(file));
++            writer = new BufferedWriter(new FileWriter(tempSaveFile));
++            String line;
++            while ((line = reader.readLine()) != null) {
++                String newLine = fileContentListener.lineTextContent(line);
++                writer.write(newLine);
++                writer.newLine();
++                writer.flush();
++            }
++            file.delete();
++            tempSaveFile.renameTo(file);
++        } catch (Exception e) {
++            MyLog.error(TAG, "modifyFileContent -> 读取文件流的过程中出现异常！");
++            e.printStackTrace();
++            return false;
++        } finally {
++            if (reader != null) {
++                try {
++                    reader.close();
++                } catch (IOException e) {
++                    e.printStackTrace();
++                }
++            }
++
++            if (writer != null) {
++                try {
++                    writer.close();
++                } catch (IOException e) {
++                    e.printStackTrace();
++                }
++            }
++        }
++        return true;
++    }
++
++
++    public static boolean replaceContent(String filePath, String replaceContent, String searchTag) {
++        return modifyFileContent(filePath, line -> {
++            if (line.contains(searchTag)) {
++                return replaceContent;
++            }
++            return line;
++        });
++    }
++
++    public static String getStrFromVariable(String filePath, String variableName) {
++        File file = checkFileExist(filePath);
++        if (file == null) {
++            return null;
++        }
++
++        BufferedReader reader = null;
++        try {
++            reader = new BufferedReader(new FileReader(file));
++            String line;
++            while ((line = reader.readLine()) != null) {
++                if (line.contains(variableName)) {
++                    String trim = line.split("=")[1].trim();
++                    return trim.replaceAll(";", "").replace("\"", "");
++                }
++            }
++        } catch (Exception e) {
++            return null;
++        } finally {
++            if (reader != null) {
++                try {
++                    reader.close();
++                } catch (IOException e) {
++                    e.printStackTrace();
++                }
++            }
++        }
++        return null;
++    }
++
++    public static boolean moveFileDir(String srcFilePath, String desFilePath) {
++        if (!copyOrMoveFileDirCheck(srcFilePath, desFilePath)) {
++            MyLog.error(TAG, "moveFileDir -> 检测参数失败！");
++            return false;
++        }
++
++        try {
++            Files.move(Paths.get(srcFilePath), Paths.get(desFilePath), StandardCopyOption.REPLACE_EXISTING);
++        } catch (IOException e) {
++            MyLog.error(TAG, "moveFileDir -> 移动文件夹执行失败！");
++            e.printStackTrace();
++            return false;
++        }
++        return true;
++    }
++
++    public static boolean copyFileDir(String srcFilePath, String desFilePath) {
++        if (!copyOrMoveFileDirCheck(srcFilePath, desFilePath)) {
++            MyLog.error(TAG, "copyFileDir -> 检测参数失败！");
++            return false;
++        }
++
++        try {
++            Files.copy(Paths.get(srcFilePath), Paths.get(desFilePath), StandardCopyOption.COPY_ATTRIBUTES);
++        } catch (IOException e) {
++            MyLog.error(TAG, "copyFileDir -> 复制文件夹执行失败！");
++            e.printStackTrace();
++            return false;
++        }
++        return true;
++    }
++
++    public static boolean moveFile(String srcFilePath, String desFilePath) {
++        if (!copyOrMoveFileCheck(srcFilePath, desFilePath)) {
++            MyLog.error(TAG, "moveFile -> 检测参数失败！");
++            return false;
++        }
++
++        try {
++            Files.move(Paths.get(srcFilePath), Paths.get(desFilePath), StandardCopyOption.REPLACE_EXISTING);
++        } catch (IOException e) {
++            MyLog.error(TAG, "moveFile -> 移动文件执行失败！");
++            e.printStackTrace();
++            return false;
++        }
++        return true;
++    }
++
++    public static boolean copyFile(String srcFilePath, String desFilePath) {
++        if (!copyOrMoveFileCheck(srcFilePath, desFilePath)) {
++            MyLog.error(TAG, "copyFile -> 检测参数失败！");
++            return false;
++        }
++
++        try {
++            Files.copy(Paths.get(srcFilePath), Paths.get(desFilePath), StandardCopyOption.COPY_ATTRIBUTES);
++        } catch (IOException e) {
++            MyLog.error(TAG, "copyFile -> 复制文件执行失败！");
++            e.printStackTrace();
++            return false;
++        }
++        return true;
++    }
++
++    private static boolean copyOrMoveFileCheck(String srcFilePath, String desFilePath) {
++        File srcFile = checkFileExist(srcFilePath);
++        if (srcFile == null) {
++            MyLog.error(TAG, "copyOrMoveFileCheck -> 检测源文件不存在，拷贝或移动文件执行失败！");
++            return false;
++        }
++
++        if (!srcFile.isFile()) {
++            MyLog.error(TAG, "copyOrMoveFileCheck -> 源文件的类型不对，不是文件类型，拷贝或移动文件执行失败！");
++            return false;
++        }
++
++        File desFile = new File(desFilePath);
++        if (desFile.exists()) {
++            boolean delete = desFile.delete();
++            if (!delete) {
++                MyLog.error(TAG, "copyOrMoveFileCheck -> 删除老的目的文件失败，拷贝或移动文件执行失败！");
++                return false;
++            }
++        }
++
++        String parent = desFile.getParent();
++        File parentDir = new File(parent);
++        if (!parentDir.exists()) {
++            boolean mkdirs = parentDir.mkdirs();
++            if (!mkdirs) {
++                MyLog.error(TAG, "copyOrMoveFileCheck -> 创建目的多层文件夹失败！拷贝或移动文件执行失败！");
++                return false;
++            }
++        }
++        return true;
++    }
++
++    private static boolean copyOrMoveFileDirCheck(String srcFilePath, String desFilePath) {
++        File srcFile = checkFileDirExist(srcFilePath);
++        if (srcFile == null) {
++            MyLog.error(TAG, "copyOrMoveFileDirCheck -> 检测源文件夹不存在，拷贝或移动文件执行失败！");
++            return false;
++        }
++
++        File desDir = new File(desFilePath);
++        if (desDir.exists()) {
++            boolean delete = deleteFileDir(desDir);
++            if (!delete) {
++                MyLog.error(TAG, "copyOrMoveFileDirCheck -> 删除老的目的文件夹失败，拷贝或移动文件执行失败！");
++                return false;
++            }
++        }
++        return true;
++    }
++
++    public static boolean deleteFileDir(File desDir) {
++        if (desDir == null) {
++            return false;
++        }
++
++        String[] list = desDir.list();
++        if (list != null && list.length > 0) {
++            for (String name : list) {
++                String tarPath = desDir.getAbsolutePath() + File.separator + name;
++                File file = new File(tarPath);
++                if (file.isDirectory()) {
++                    deleteFileDir(file);
++                } else {
++                    boolean delete = file.delete();
++                    if (!delete) {
++                        MyLog.error(TAG, "deleteFileDir -> 删除文件夹中的文件失败！" + tarPath);
++                        return false;
++                    }
++                }
++            }
++        }
++
++        boolean delete = desDir.delete();
++        if (!delete) {
++            MyLog.error(TAG, "deleteFileDir -> 删除文件夹失败！" + desDir.getAbsolutePath());
++            return false;
++        }
++        return true;
++    }
++
++    private static void log(String msg) {
++        MyLog.d(TAG, msg);
++    }
++
++    public interface FileContentListener {
++
++        String lineTextContent(String line);
++    }
++}
+Index: mybaseui/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mybaseui/.gitignore	(date 1593445838000)
++++ mybaseui/.gitignore	(date 1593445838000)
+@@ -0,0 +1,1 @@
++/build
+\ No newline at end of file
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 83c1c1833a95478967552ec82f6d187429058aa8)
++++ app/build.gradle	(date 1593446841000)
+@@ -6,7 +6,7 @@
+ 
+     defaultConfig {
+         applicationId "com.example.myuiproject"
+-        minSdkVersion 18
++        minSdkVersion 26
+         targetSdkVersion 29
+         versionCode 1
+         versionName "1.0"
+@@ -38,4 +38,8 @@
+ 
+     implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
+     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
++}
++
++task build2 {
++
+ }
+\ No newline at end of file
+Index: mybaseui/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mybaseui/build.gradle	(date 1593446841000)
++++ mybaseui/build.gradle	(date 1593446841000)
+@@ -0,0 +1,32 @@
++apply plugin: 'com.android.library'
++
++android {
++    compileSdkVersion 29
++    buildToolsVersion "30.0.0"
++
++    defaultConfig {
++        minSdkVersion 26
++        targetSdkVersion 29
++        versionCode 1
++        versionName "1.0"
++
++        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
++        consumerProguardFiles "consumer-rules.pro"
++    }
++
++    buildTypes {
++        release {
++            minifyEnabled false
++            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
++        }
++    }
++    compileOptions {
++        sourceCompatibility JavaVersion.VERSION_1_8
++        targetCompatibility JavaVersion.VERSION_1_8
++    }
++}
++
++dependencies {
++    implementation fileTree(dir: "libs", include: ["*.jar"])
++    implementation 'androidx.appcompat:appcompat:1.1.0'
++}
+\ No newline at end of file
+Index: mybaseui/src/main/java/com/example/mybaseui/BaseBuilder.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mybaseui/src/main/java/com/example/mybaseui/BaseBuilder.java	(date 1593447811000)
++++ mybaseui/src/main/java/com/example/mybaseui/BaseBuilder.java	(date 1593447811000)
+@@ -0,0 +1,14 @@
++package com.example.mybaseui;
++
++import java.io.File;
++
++/**
++ * 当前路径
++ * /Users/zanewang/Downloads/WorkSpace/MyGithubs/Android/MyUIProject/.
++ */
++class BaseBuilder {
++
++    protected static final String mXmlSpace = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
++    protected static final String mAndroidResSpace = "xmlns:android=\"http://schemas.android.com/apk/res/android\"";
++
++}
+Index: mybaseui/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mybaseui/src/main/AndroidManifest.xml	(date 1593445841000)
++++ mybaseui/src/main/AndroidManifest.xml	(date 1593445841000)
+@@ -0,0 +1,5 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.example.mybaseui">
++
++    /
++</manifest>
+\ No newline at end of file
+Index: mybaseui/src/main/java/com/example/mybaseui/utils/MyTextUtils.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mybaseui/src/main/java/com/example/mybaseui/utils/MyTextUtils.java	(date 1593446758000)
++++ mybaseui/src/main/java/com/example/mybaseui/utils/MyTextUtils.java	(date 1593446758000)
+@@ -0,0 +1,8 @@
++package com.example.mybaseui.utils;
++
++public class MyTextUtils {
++
++    public static boolean isEmpty(CharSequence str) {
++        return str == null || str.length() == 0;
++    }
++}
+Index: mybaseui/src/main/java/com/example/mybaseui/utils/MyLog.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mybaseui/src/main/java/com/example/mybaseui/utils/MyLog.java	(date 1593446907000)
++++ mybaseui/src/main/java/com/example/mybaseui/utils/MyLog.java	(date 1593446907000)
+@@ -0,0 +1,26 @@
++package com.example.mybaseui.utils;
++
++import android.util.Log;
++
++import java.text.SimpleDateFormat;
++
++public class MyLog {
++
++    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSSS");
++
++    public static void d(String tag, String msg) {
++        Log.d(tag, msg);
++    }
++
++    public static void e(String tag, String msg) {
++        Log.e(tag, msg);
++    }
++
++    public static void error(String tag, String msg) {
++        try {
++            throw new Exception(tag + " -> " + msg);
++        } catch (Exception e) {
++            e.printStackTrace();
++        }
++    }
++}
+Index: app/src/main/java/com/example/myuiproject/view/ProgressView.java
+===================================================================
+--- app/src/main/java/com/example/myuiproject/view/ProgressView.java	(revision 83c1c1833a95478967552ec82f6d187429058aa8)
++++ app/src/main/java/com/example/myuiproject/customview/view/ProgressView.java	(date 1593445110000)
+@@ -1,4 +1,4 @@
+-package com.example.myuiproject.view;
++package com.example.myuiproject.customview.view;
+ 
+ import android.animation.Animator;
+ import android.animation.ObjectAnimator;
+Index: app/src/main/java/com/example/myuiproject/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myuiproject/MainActivity.java	(revision 83c1c1833a95478967552ec82f6d187429058aa8)
++++ app/src/main/java/com/example/myuiproject/MainActivity.java	(date 1593445110000)
+@@ -6,7 +6,7 @@
+ import android.view.View;
+ 
+ import com.example.myuiproject.databinding.ActivityMainBinding;
+-import com.example.myuiproject.dialog.SimpleDialogFragment;
++import com.example.myuiproject.customview.dialog.SimpleDialogFragment;
+ 
+ import androidx.databinding.DataBindingUtil;
+ import io.reactivex.Observable;

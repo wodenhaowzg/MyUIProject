@@ -9,6 +9,8 @@ import com.example.myuiproject.databinding.ActivityMainBinding;
 import com.example.myuiproject.customview.dialog.SimpleDialogFragment;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentManager;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -57,6 +59,14 @@ public class MainActivity extends BaseActivity {
                                 }
                             }
                         });
+            }
+        });
+
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        supportFragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+
             }
         });
     }

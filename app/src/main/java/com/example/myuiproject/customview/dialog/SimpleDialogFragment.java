@@ -37,8 +37,6 @@ import androidx.fragment.app.DialogFragment;
  * SimpleDialogFragment simpleDialogFragment = SimpleDialogFragment.newInstance("我是标题", "我是内容");
  * simpleDialogFragment.show(getSupportFragmentManager(), "SimpleDialogFragment");
  *
- *
- *
  */
 public class SimpleDialogFragment extends DialogFragment {
 
